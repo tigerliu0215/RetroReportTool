@@ -14,12 +14,16 @@ import static org.junit.Assert.*;
 public class RetroReportToolTest {
 
     private static final String DATE_PATTERN = "yyyy-MM-dd";
+    private static final DateFormat formatter = new SimpleDateFormat(DATE_PATTERN);
     @Test
-    public void should_import_csv_correctly() throws IOException, ParseException {
+    public void should_import_csv_and_export_report_correctly() throws IOException, ParseException, ReportInternalException {
         String filePath = "src/test/resources/data/original_report_1.csv";
-        RetroReportTool retroReportTool = new RetroReportTool(filePath);
+        Date iterationStartDate = formatter.parse("2019-01-07");
+        RetroReportTool retroReportTool = new RetroReportTool(filePath,iterationStartDate);
         retroReportTool.importOriginalReport();
         List<ALMStory> stories = retroReportTool.getStories();
+        retroReportTool.exportRetroReport();
+
         ALMStory story = stories.get(0);
         assertEquals("ST185493", story.getId());
         assertEquals("Appscan script record for DSH/HRC", story.getName());
@@ -37,7 +41,6 @@ public class RetroReportToolTest {
     }
 
     private static void assertEqualDates(String expected, Date value) {
-        DateFormat formatter = new SimpleDateFormat(DATE_PATTERN);
         String strValue = formatter.format(value);
         assertEquals(expected, strValue);
     }

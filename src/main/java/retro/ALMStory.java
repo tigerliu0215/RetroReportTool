@@ -8,7 +8,6 @@ public class ALMStory {
     private String id;
     private String name;
     private String state;
-    private String release;
     private String project;
     private String owner;
     private String kanbanState;
@@ -19,6 +18,54 @@ public class ALMStory {
     private Date testEnd;
     private int testWorkload;
     private int points;
+    private String tag;
+
+    //report field
+    private int pointHours;
+    private int actualHours;
+    private int diffHours;
+
+    private boolean isRemainingStory;
+    private boolean isDone;
+
+    public boolean isAdhocSupport() {
+        if (tag == null || "".equals(tag)) {
+            return false;
+        }else if(tag.contains("Adhoc support") || tag.contains("Ad-hoc Support")){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isAdhocSupport;
+
+    public void setRemainingStory(Date iterationStart) {
+        if (devStart == null) {
+            isRemainingStory = false;
+        } else {
+            isRemainingStory = iterationStart.after(devStart);
+        }
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public boolean isRemainingStory() {
+        return isRemainingStory;
+    }
+
+    public int getPointHours() {
+        return pointHours;
+    }
+
+    public int getActualHours() {
+        return actualHours;
+    }
+
+    public int getDiffHours() {
+        return diffHours;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -32,10 +79,6 @@ public class ALMStory {
         this.state = state;
     }
 
-    public void setRelease(String release) {
-        this.release = release;
-    }
-
     public void setProject(String project) {
         this.project = project;
     }
@@ -46,6 +89,9 @@ public class ALMStory {
 
     public void setKanbanState(String kanbanState) {
         this.kanbanState = kanbanState;
+        if ("QA Testing Completed".equals(kanbanState) || "Accepted to Release".equals(kanbanState)) {
+            this.isDone = true;
+        }
     }
 
     public void setDevStart(Date devStart) {
@@ -126,5 +172,15 @@ public class ALMStory {
 
     public int getPoints() {
         return points;
+    }
+
+    public void calculateHourCost() {
+        this.pointHours = this.points * 8;
+        this.actualHours = (this.devWorkload + this.testWorkload);
+        this.diffHours = actualHours - pointHours;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }
