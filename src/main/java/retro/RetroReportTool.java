@@ -58,7 +58,7 @@ public class RetroReportTool {
         }
     }
 
-    public void exportRetroReport() throws ReportInternalException, IOException {
+    public void exportRetroReport(String directory, String fileName) throws ReportInternalException, IOException {
         List<List<Object>> objects = new LinkedList<List<Object>>();
         objects.add(constructStoryHeader("Done Story"));
         objects.addAll(constructStoriesData(this.doneStories));
@@ -70,7 +70,7 @@ public class RetroReportTool {
 
         objects.add(constructStoryHeader("Adhoc Support Story"));
         objects.addAll(constructStoriesData(this.adhocSupportStories));
-        Excel2003Utils.writeExcelData("D:\\", "DSH-Retro", "retro data", objects);
+        Excel2003Utils.writeExcelData(directory, fileName, "retro data", objects);
     }
     private List<List<Object>> constructStoriesData(List<ALMStory> stories) {
         List<List<Object>> storiesData = new LinkedList<List<Object>>();

@@ -22,7 +22,9 @@ public class RetroReportToolTest {
         RetroReportTool retroReportTool = new RetroReportTool(filePath,iterationStartDate);
         retroReportTool.importOriginalReport();
         List<ALMStory> stories = retroReportTool.getStories();
-        retroReportTool.exportRetroReport();
+
+        //default export to D:/DSH-Retro.xls
+        retroReportTool.exportRetroReport("D:\\", "DSH-Retro");
 
         ALMStory story = stories.get(0);
         assertEquals("ST185493", story.getId());
