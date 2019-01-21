@@ -17,6 +17,7 @@ public class RetroReportTool {
     private List<ALMStory> doneStories = new ArrayList<ALMStory>();
     private List<ALMStory> inProgressStories = new ArrayList<ALMStory>();
     private List<ALMStory> adhocSupportStories = new ArrayList<ALMStory>();
+    private List<ALMStory> remainingStory = new ArrayList<ALMStory>();
     private final SimpleDateFormat ORIGINAL_DATE_FORMATTER = new SimpleDateFormat(ORGINAL_DATE_PATTERN);
     private Date iterationStartDate;
 
@@ -49,6 +50,8 @@ public class RetroReportTool {
             story.calculateHourCost();
             if (story.isAdhocSupport()) {
                 adhocSupportStories.add(story);
+            } else if (story.isRemainingStory()) {
+                remainingStory.add(story);
             } else if (story.isDone()) {
                 doneStories.add(story);
             } else {
@@ -62,6 +65,10 @@ public class RetroReportTool {
         List<List<Object>> objects = new LinkedList<List<Object>>();
         objects.add(constructStoryHeader("Done Story"));
         objects.addAll(constructStoriesData(this.doneStories));
+        objects.add(constructEmptyLine());
+
+        objects.add(constructStoryHeader("Remaining Story"));
+        objects.addAll(constructStoriesData(this.remainingStory));
         objects.add(constructEmptyLine());
 
         objects.add(constructStoryHeader("In Progress Story"));
