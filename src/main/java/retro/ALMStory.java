@@ -183,4 +183,13 @@ public class ALMStory {
     public void setTag(String tag) {
         this.tag = tag;
     }
+
+    public boolean isQARoleStory() {
+        if (tag == null || "".equals(tag)) {
+            return false;
+        }else if(tag.contains("QA Role")){
+            return true;
+        }
+        return false;
+    }
 }

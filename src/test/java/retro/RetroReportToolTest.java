@@ -17,8 +17,8 @@ public class RetroReportToolTest {
     private static final DateFormat formatter = new SimpleDateFormat(DATE_PATTERN);
     @Test
     public void should_import_csv_and_export_report_correctly() throws IOException, ParseException, ReportInternalException {
-        String filePath = "src/test/resources/data/original_report_1.csv";
-        Date iterationStartDate = formatter.parse("2019-01-07");
+        String filePath = "src/test/resources/data/original_report_2.csv";
+        Date iterationStartDate = formatter.parse("2019-07-22");
         RetroReportTool retroReportTool = new RetroReportTool(filePath,iterationStartDate);
         retroReportTool.importOriginalReport();
         List<ALMStory> stories = retroReportTool.getStories();
